@@ -35,6 +35,7 @@ function cell = lstmcellff(cell, x, y)
     mgc(1, :) = active_func(mc(1,:), cell.g);
     mh(1,:) = mo(1,:) .* mgc(1, :);
 
+%% compute memory for each time    
     for t = 2 : m
         % a_i(t) = W_ix * x(t) + W_ih * h(t-1) + W_ic * c(t-1)
         mai(t,:) =  x(t,:) * cell.W_ix' + mh(t-1, :) * cell.W_ih' + mc(t-1, :) .* cell.W_ic';
@@ -61,6 +62,7 @@ function cell = lstmcellff(cell, x, y)
         % h(t) = o(t) * gc(t)
         mh(t,:) = mo(t,:) .* mgc(t, :);
     end
+%% 
     cell.x = x;
     cell.mi = mi;
     cell.mai = mai;

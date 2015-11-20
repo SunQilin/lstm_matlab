@@ -1,12 +1,16 @@
 function lstmcell = lstmcellsetup(inputlen, outputlen, opt, active)
-%lstmcell create a lstmcell layer for a Feedforword Backpropagate Neural Network and it can be used as a active function conveniently
-%   lstmcell = lstmcellsetup(inputlen, outputlen) 
-
+% lstmcellsetup create a lstmcell layer for a Feedforword Backpropagate Neural Network 
+% and it can be used as a active function conveniently.
+% Notice that this setup will add biases automaticly.
+% inputlen:   length of input layer
+% outputlen:  length of output layer
+% opt:        parameters for network optimize    
+% active:     active function for the network
 %% lstmcell setup
     lstmcell.inputlen = inputlen;
     lstmcell.outputlen = outputlen;
-    lstmcell.delta = active{1};
-    lstmcell.g = active{2};
+    lstmcell.delta = active{1}; % active function for gate
+    lstmcell.g = active{2}; % active function for c
     %lstmcell.h = 'tanh';
     lstmcell.learningRate = opt.learningRate;
     lstmcell.momentum = opt.momentum;
@@ -14,6 +18,7 @@ function lstmcell = lstmcellsetup(inputlen, outputlen, opt, active)
     lstmcell.scaling_learningRate = opt.scaling_learningRate;
 
     
+%% initialization of weights
     %i_t
     lstmcell.W_ix = (rand(outputlen, inputlen + 1) - 0.5) / inputlen;
     lstmcell.W_ih = (rand(outputlen, outputlen) - 0.5) / outputlen;
